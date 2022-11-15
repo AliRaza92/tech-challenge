@@ -6,6 +6,10 @@
     <meta name="csrf-token" value="{{ csrf_token() }}" />
     <title>Vue JS CRUD Operations in Laravel</title>
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" />
+    <!-- <link href="css/tailwindcss.css" type="text/css" rel="stylesheet" /> -->
+
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 <body>
     <div id="app"></div>

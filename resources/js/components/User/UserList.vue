@@ -1,63 +1,101 @@
 <template>
     <div>
-        <h2 class="text-center">Products Listdggdg</h2>
- 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>IDasd</th>
-                <th>Name</th>
-                <th>Detail</th>
-                <!-- <th>Actions</th> -->
-            </tr>
-            </thead>
-            <tbody>
-            <!-- <tr v-for="product in products" :key="product.id">
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.detail }}</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <router-link :to="{name: 'edit', params: { id: product.id }}" class="btn btn-success">Edit</router-link>
-                        <button class="btn btn-danger" @click="deleteProduct(product.id)">Delete</button>
+        <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
+            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+                <div class="rounded-t mb-0 px-4 py-3 border-0">
+                    <div class="flex flex-wrap items-center">
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
+                            <h3 class="font-semibold text-base text-blueGray-700">Users List</h3>
+                        </div>
+                        <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                            <button
+                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button">See all</button>
+                        </div>
                     </div>
-                </td>
-            </tr> -->
-            </tbody>
-        </table>
+                </div>
+
+                <div class="block w-full overflow-x-auto">
+                    <table class="items-center bg-transparent w-full border-collapse ">
+                        <thead>
+                            <tr>
+
+                                <th @click="sortedArray"
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Name
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Email
+                                </th>
+                                <th
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Registration Date
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr v-for="user in users" :key="user.id">
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                    {{ user.name }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ user.email }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ user.created_at }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
  
 <script>
-    export default {
-        data() {
-            return {
-                products: []
-            }
-        },
-        created() {
-            this.getAllUsers();
-        },
-        methods: {
-            getAllUsers() {
-                this.axios
+export default {
+    data() {
+        return {
+            users: [],
+            sortKey: 'name',
+            sortDirection: 'ASC',
+        }
+    },
+    created() {
+        this.getAllUsers();
+    },
+    methods: {
+        /**
+         * Get all users 
+         */
+        getAllUsers() {
+            this.axios
                 .get('/api/users')
                 .then(response => {
-                    console.log("im here ");
-                    console.log(response.data);                    
-                    //this.products = response.data;
+                    this.users = response.data.sort((a, b) => a.name - b.name);;
                 });
-            }
+        },
+        /**
+         * Sort user by name 
+         */
+        sortedArray() {
+            this.sortDirection = (this.sortDirection == 'ASC') ? 'DESC' : 'ASC';
+            this.users.sort(function (a, b) {
+                if (this.sortDirection == 'ASC') {
+                    return ((a.name == b.name) ? 0 : ((a.name > b.name) ? 1 : -1));
+                }
 
-
-            // deleteProduct(id) { 
-            //     this.axios
-            //         .delete(`http://localhost:8000/api/products/${id}`)
-            //         .then(response => {
-            //             let i = this.products.map(data => data.id).indexOf(id);
-            //             this.products.splice(i, 1)
-            //         });
-            // }
+                if (this.sortDirection == 'DESC') {
+                    return ((a.name == b.name) ? 0 : ((a.name < b.name) ? 1 : -1));
+                }
+            }.bind(this));
         }
     }
+}
 </script>
