@@ -14,13 +14,5 @@ use App\Http\Controllers\Controller;
 |
 */
 
-// Route::get('/', function () {
-//     return view('users');
-// });
-
-// Route::get('/users', [Controller::class, 'getUsers']);
-
-Route::get('{any}', function () {
-    return view('app');
-})->where('any', '.*');
+Route::view('/', 'app');
 

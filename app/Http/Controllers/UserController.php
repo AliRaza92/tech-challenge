@@ -7,9 +7,8 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index()
+    public function __invoke()
     {
-        $users = User::get();
-        return response()->json($users);
+        return User::get();
     }
 }

@@ -4,7 +4,7 @@ import ExampleCom from './components/ExampleComponent.vue';
 export const routes = [
     {
         name: 'users',
-        path: '/list-user',
+        path: '/',
         component: AllUsers
     },
     {

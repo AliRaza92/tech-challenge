@@ -19,10 +19,13 @@
                     <table class="items-center bg-transparent w-full border-collapse ">
                         <thead>
                             <tr>
-
                                 <th @click="sortedArray"
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                    Name
+                                    First Name
+                                </th>
+                                <th @click="sortedArray"
+                                    class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    Last Name
                                 </th>
                                 <th
                                     class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -37,9 +40,13 @@
 
                         <tbody>
                             <tr v-for="user in users" :key="user.id">
-                                <td
+                                <td @click="userDetailInfo(user)"
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {{ user.name }}
+                                    {{ user.firstname }}
+                                </td>
+                                <td @click="userDetailInfo(user)"
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                    {{ user.lastname }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -81,6 +88,9 @@ export default {
                     this.users = response.data.sort((a, b) => a.name - b.name);;
                 });
         },
+        userDetailInfo(user){
+            console.log(user);
+        },
         /**
          * Sort user by name 
          */
@@ -88,11 +98,11 @@ export default {
             this.sortDirection = (this.sortDirection == 'ASC') ? 'DESC' : 'ASC';
             this.users.sort(function (a, b) {
                 if (this.sortDirection == 'ASC') {
-                    return ((a.name == b.name) ? 0 : ((a.name > b.name) ? 1 : -1));
+                    return ((a.firstname == b.firstname) ? 0 : ((a.firstname > b.firstname) ? 1 : -1));
                 }
 
                 if (this.sortDirection == 'DESC') {
-                    return ((a.name == b.name) ? 0 : ((a.name < b.name) ? 1 : -1));
+                    return ((a.firstname == b.firstname) ? 0 : ((a.firstname < b.firstname) ? 1 : -1));
                 }
             }.bind(this));
         }

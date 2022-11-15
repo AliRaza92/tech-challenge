@@ -15,11 +15,4 @@ use App\Http\Controllers\UserController;
 |
 */
 
-
-Route::resource('users',App\Http\Controllers\UserController::class)->only(['index']);
-
-
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::get('users', UserController::class);
