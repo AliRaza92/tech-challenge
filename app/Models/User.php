@@ -6,16 +6,31 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
+
+    protected $table = 'users';
 
     /**
-     * The attributes that are mass assignable.
+     * Get the user's Created At.
      *
-     * @var array
+     * @param  string  $value
+     * @return void
      */
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');
+    }
+
+    /**
+         * The attributes that are mass assignable.
+         *
+         * @var array
+         */
     protected $fillable = [
         'first_name',
         'last_name',
