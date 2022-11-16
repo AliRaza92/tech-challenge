@@ -14,5 +14,5 @@ use App\Http\Controllers\Controller;
 |
 */
 
-Route::view('/', 'app');
+Route::view('/', 'users');
 
